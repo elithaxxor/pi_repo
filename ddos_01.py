@@ -79,7 +79,7 @@ else:
             discover_ap = subprocess.Popen(
                 ['sudo', 'airodump-ng', '-w', 'file', '--write-interval', '1', '--output-format', 'csv', nic + 'mon'], stdout=subprocess.devnull, stderr=subprocess.devnull)
 
-        except exception as e:
+        except Exception as e:
             print(f'Exception found in USER_IW {str(e)})')
 
 ## set up the porcess to run airmon ng.  do not forget to clear shell, and check if .csv load is true
